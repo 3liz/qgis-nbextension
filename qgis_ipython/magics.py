@@ -13,7 +13,7 @@ from typing import Tuple, Dict
 from IPython.core.magic import Magics, line_magic, cell_magic, magics_class
 
 from .startup import start_qgis_application
-
+from .status  import processing_infos
 
 
 def parse_args(argstring: str) -> argparse.Namespace:
@@ -49,5 +49,12 @@ class QgisMagics(Magics):
         start_qgis_application(verbose=args.verbose,enable_processing=args.processing)
         self._inited = True
 
+    @line_magic('qgis-processing-infos')
+    def qgis_processing_infos(self, line: str) -> None:
+        if not self._inited:
+            print("You must start qgis with '%qgis --processing' first.", file=sys.stderr, flush=True)
+            return
+        processing_infos(line)
+        
 
 
