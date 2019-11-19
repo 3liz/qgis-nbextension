@@ -14,7 +14,7 @@ if os.path.exists(requirements):
 
 
 setup(
-    name='qgis-ipython',
+    name='qgis-nbextension',
     version="1.0",
     author='3Liz',
     author_email='infos@3liz.org',
@@ -22,7 +22,7 @@ setup(
     maintainer_email='dmarteau@3liz.org',
     description="QGIS notebook extension",
     url='',
-    packages=find_packages(include=['qgis_ipython','qgis_ipython.*']),
+    packages=find_packages(include=['qgisnbextension','qgis_nbextension.*']),
     classifiers=[
         'Intended Audience :: Developers',
         'Intended Audience :: Science/Research',
