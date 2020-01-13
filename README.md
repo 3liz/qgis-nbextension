@@ -15,7 +15,7 @@ Qgis notebook extension is syntactic sugar around qgis to leverage use of qgis i
 Load in your notebook with:
 
 ```
-%load_ext qgis_nbextension
+%load_ext qgisnbextension
 ```
 
 ## Magic commands
