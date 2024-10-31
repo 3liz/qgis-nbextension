@@ -16,14 +16,14 @@
 #    with this program; if not, write to the Free Software Foundation, Inc.,
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-import sys
 import argparse
-from typing import Tuple, Dict
+import sys
 
-from IPython.core.magic import Magics, line_magic, cell_magic, magics_class
+from IPython.core.interactiveshell import InteractiveShell
+from IPython.core.magic import Magics, line_magic, magics_class
 
-from .startup import start_qgis_application
-from .status  import processing_infos
+from .startup import init_processing, start_qgis_application
+from .status import processing_infos
 
 
 def parse_args(argstring: str) -> argparse.Namespace:
@@ -38,7 +38,7 @@ def parse_args(argstring: str) -> argparse.Namespace:
 @magics_class
 class QgisMagics(Magics):
 
-    def __init__(self, shell: 'InteractiveShell' ) -> None:
+    def __init__(self, shell: InteractiveShell) -> None:
         super().__init__(shell)
         self._inited = False
 
@@ -53,18 +53,18 @@ class QgisMagics(Magics):
         args = parse_args(line)
         if self._inited:
             if args.verbose:
-                print("Qgis already initialized",file=sys.stderr, flush=True)
+                print("Qgis already initialized", file=sys.stderr, flush=True)
             return
 
-        start_qgis_application(verbose=args.verbose,enable_processing=args.processing)
+        start_qgis_application(verbose=args.verbose, enable_processing=args.processing)
         self._inited = True
 
-    @line_magic('qgis-processing-infos')
+    @line_magic('qgis-processing')
     def qgis_processing_infos(self, line: str) -> None:
         if not self._inited:
-            print("You must start qgis with '%qgis --processing' first.", file=sys.stderr, flush=True)
+            print("You must start qgis with '%qgis --processing' first.",
+                  file=sys.stderr, flush=True)
             return
+
+        init_processing()
         processing_infos(line)
-        
-
-

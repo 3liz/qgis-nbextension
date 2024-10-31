@@ -37,5 +37,3 @@ Options:
 - IPython documentation: https://ipython.readthedocs.io/en/stable/config/extensions
 
 
-
-
